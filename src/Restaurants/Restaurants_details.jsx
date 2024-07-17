@@ -2,6 +2,7 @@ import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import { restaurant } from '../data/data';
 import { AppContext } from '../data/Context';
+import Booking_Modal from '../Components/Booking_Modal';
 
 const Restaurants_details = ({
     location = "",
@@ -119,6 +120,9 @@ const Restaurants_details = ({
                     );
                 })}
             </Grid>
+
+            <Booking_Modal SelectedRestaurantID={SelectedRestaurantID} setSearchedRestaurantID={setSearchedRestaurantID} />
+
         </Grid>
     );
 };

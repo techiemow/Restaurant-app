@@ -14,9 +14,9 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import bcrypt from 'bcryptjs';
-import { apiurl } from '../data/data';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { apiurl } from '../data/data';
 
 function Copyright(props) {
   return (
@@ -54,13 +54,11 @@ export default function SignUp() {
       .required('Confirm Password is required'),
   });
 
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       // Hash the password
       const hashedPassword = await bcrypt.hash(values.password, 10); // Salt rounds = 10
-         
 
- 
       // Make API request with hashed password
       const apiResponse = await axios.post(`${apiurl}/registration`, {
         username: values.username,
@@ -69,16 +67,17 @@ export default function SignUp() {
         password: hashedPassword, // Send hashed password to API
       });
 
-
       console.log('API Response:', apiResponse.data);
 
       if (apiResponse?.data?._id) {
-        // Reset form state and close modal on successful registration
-        setSubmitting(false);
-        // Close modal or redirect as needed
+        resetForm(); // Reset form fields to initial values
+        setTerms(false); // Reset terms checkbox
+        // Optionally, add any logic after successful registration
+        // e.g., redirect user to login page
       }
     } catch (error) {
       console.error('Registration error:', error);
+    } finally {
       setSubmitting(false);
     }
   };

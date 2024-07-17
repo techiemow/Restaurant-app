@@ -95,7 +95,7 @@ restaurant
               variant="outlined"
               size="medium"
               onClick={() => {
-                setOpenType("login");
+                setOpenType("Login");
                 navigate("/login");
               }}
             >
@@ -107,7 +107,7 @@ restaurant
               variant="outlined"
               size="medium"
               onClick={() => {
-                setOpenType("register");
+                setOpenType("Register");
                 navigate("/register");
               }}
             >
