@@ -11,6 +11,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Slider from "@mui/material/Slider";
 import axios from "axios";
+import TimeSlots from './TimeSlots';
+import { apiurl } from '../data/data';
 
 
 
@@ -37,6 +39,14 @@ const handleSliderChange = (event) => {
     });
   };
 
+
+  const onTimeClick = (slot) => {
+    setBookingDetails({
+      ...bookingDetails,
+      selectedTime: slot,
+    });
+  };
+
   
   const handleDateChange = async (value) => {
     const day = new Date(value).getDate();
@@ -52,17 +62,44 @@ const handleSliderChange = (event) => {
 
     if (bookingData) {
       const response = await axios.get(
-        `${apiuri}/bookedSlots/${selectedRestaurentId}/${bookingData}`
+        `${apiurl}/bookedSlots/${SelectedRestaurantID}/${bookingData}`
       );
+      console.log(response.data)
       setSelectedSlotsForDate(response.data);
     }
   };
 
+  const handleSubmit = async () => {
+    const { selectedDate, selectedSeats, selectedTime } = bookingDetails;
+
+    if (
+      selectedDate?.length &&
+      selectedSeats &&
+      selectedTime?.length &&
+      username?.length &&
+      SelectedRestaurantID?.length
+    ) {
+      const apiResponse = await axios.post(`${apiurl}/createBooking`, {
+        selectedTime,
+        selectedSeats,
+        selectedDate,
+        username,
+        restaurentId: SelectedRestaurantID,
+      });
+
+      if (apiResponse.data?._id) {
+        setSearchedRestaurantID("");
+        setBookingDetails(defaultState);
+        setSelectedSlotsForDate([]);
+        alert("Booking Success");
+      }
+    }
+  };
 
 
   return (
     <div>
-        <Modal open={SelectedRestaurantID} onclose={() => {
+        <Modal open={SelectedRestaurantID} onClose={() => {
           setSearchedRestaurantID("");
           setBookingDetails(defaultState);
           setSelectedSlotsForDate([]);
@@ -156,6 +193,11 @@ const handleSliderChange = (event) => {
                 </DemoContainer>
               </LocalizationProvider>
             </Grid>
+            <Grid item>
+                <TimeSlots         onTimeClick={onTimeClick}
+                selectedTime={bookingDetails.selectedTime}
+                selectedSlotsForDate={selectedSlotsForDate}/>
+            </Grid>
 
          
 
@@ -172,13 +214,18 @@ const handleSliderChange = (event) => {
                 <Button
                   variant="solid"
                   color="primary"
-               
+                  onClick={handleSubmit}
                 >
                   Make A Booking
                 </Button>
                 <Button
                   variant="outlined"
                   color="neutral"
+                  onClick={() => {
+                    setSearchedRestaurantID("");
+                    setBookingDetails(defaultState);
+                    setSelectedSlotsForDate([]);
+                  }}
               
                 >
                   Cancel

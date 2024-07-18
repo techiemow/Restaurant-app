@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 import {
   AppBar,
   Autocomplete,
@@ -10,9 +10,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../data/Context";
 import Booking_status from "../Restaurants/Booking_status";
-
-
-
 
 const Navbar = () => {
   const [openType, setOpenType] = useState("");
@@ -36,21 +33,28 @@ const Navbar = () => {
     setSearchedHotel(event.target.value);
   };
 
-
   return (
-   
-<AppBar >
-<nav className="navbar navbar-expand-md bg-body-tertiary">
-  <div className="container-fluid">
-    <a className="navbar-brand mx-5" href="#"> FootzAT</a>
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
-    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-    <span className="material-symbols-outlined">restaurant</span>
-         
+    <AppBar color="transparent" position="static">
+      <nav className="navbar navbar-expand-md bg-body-tertiary">
+        <div className="container-fluid">
+          <a className="navbar-brand mx-5" href="#">
+            FootzAT
+          </a>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <span className="material-symbols-outlined">restaurant</span>
 
-    <Autocomplete
+            <Autocomplete
               className="Item m-2 mx-5"
               disablePortal
               id="combo-box-demo"
@@ -78,10 +82,10 @@ const Navbar = () => {
               placeholder="Enter the name of Restaurant"
               fullWidth
             />
-              
-              { ! username ? (
-               <>
-                    <Button
+
+            {!username ? (
+              <>
+                <Button
                   className="Item m-2 mx-5"
                   variant="outlined"
                   size="medium"
@@ -92,7 +96,7 @@ const Navbar = () => {
                 >
                   Login
                 </Button>
-     
+
                 <Button
                   className="Item m-2 mx-5"
                   variant="outlined"
@@ -105,50 +109,35 @@ const Navbar = () => {
                   Register
                 </Button>
               </>
-
             ) : (
               <>
-              <Button  className='Item m-2 mx-5' variant="contained" color="primary"
-              onClick={
-                 handleMyBookings
-              }>
-              MyBookings
-              </Button>
+                <Button
+                  className="Item m-2 mx-5"
+                  variant="outlined"
+                  size="medium"
+                  onClick={handleMyBookings}
+                >
+                  My Booking
+                </Button>
 
-                    <Button  className='Item m-2 mx-5' variant="contained" color="primary"
-                    onClick={()=>{
-                      handleLogout();
-                    }}>
-                    Logout
-                    </Button>
-
-                    </>
-
+                <Button
+                  className="Item m-2 mx-5"
+                  variant="outlined"
+                  size="medium"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </>
             )}
+          </div>
+        </div>
 
-    </div>
-  </div>
-
-   
-
-
-      
        
-
-
-  {showMyBookingModal && (
-          <Booking_status
-            showMyBookingModal={showMyBookingModal}
-            setShowMyBookingModal={setShowMyBookingModal}
-          />
-        )}
-       
-        </nav>
-        </AppBar> 
-      
+      </nav>
+    </AppBar>
   );
 };
-
 
 const locations = [
   { label: "Delhi", id: 54343 },

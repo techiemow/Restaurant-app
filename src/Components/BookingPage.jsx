@@ -50,10 +50,10 @@ const BookingPage = () => {
     <Grid
     container
     style={{
-      marginTop:"0px",
-      width: 1480
+      marginTop: '10px',
+      width: 1600
     }}
-    spacing={12}
+    spacing={1}
     columnSpacing={1} 
      >
             {!isMobile &&
